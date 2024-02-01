@@ -1,5 +1,5 @@
 <footer>
-    <div class="copyright">Copyright 2024 Pole Ninja</div>
+    <div class="copyright">Copyright 2024 Poll Ninja</div>
 </footer>
 
 <style>
