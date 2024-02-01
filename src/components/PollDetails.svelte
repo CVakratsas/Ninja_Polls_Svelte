@@ -1,19 +1,29 @@
 <script>
-    import { createEventDispatcher } from "svelte";
-    import Card from "../shared/Card.svelte";
+  import PollStore from "../stores/PollStore";
+  import Card from "../shared/Card.svelte";
 
-    export let poll;
-    const dispatch = createEventDispatcher();
+  export let poll;
 
-    // reactive value
-    $: totalVotes = poll.votesA + poll.votesB;
-    $: percentA = Math.floor(100 / totalVotes * poll.votesA);
-    $: percentB = Math.floor(100 / totalVotes * poll.votesB);
+  // reactive value
+  $: totalVotes = poll.votesA + poll.votesB;
+  $: percentA = Math.floor(100 / totalVotes * poll.votesA);
+  $: percentB = Math.floor(100 / totalVotes * poll.votesB);
 
-    // handling votes
-    const handleVote = (option, id) => {
-        dispatch('vote', {option, id});
-    }
+  // handling votes
+  const handleVote = (option, id) => {
+    PollStore.update(currentPolls => {
+      let copiedPolls = [...currentPolls];
+      let upvotedPoll = copiedPolls.find((poll) => poll.id == id);
+
+      if (option === 'a') {
+        upvotedPoll.votesA++;
+      }
+      if (option === 'b') {
+        upvotedPoll.votesB++;
+      }
+      return copiedPolls;
+    });
+  }
 </script>
 
 <Card>

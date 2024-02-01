@@ -1,13 +1,14 @@
 <script>
     import PollDetails from "./PollDetails.svelte";
-
-    export let polls = [];
+    import PollStore from "../stores/PollStore";
 </script>
 
 <div class="poll-list">
-    {#each polls as poll (poll.id)}
+    <!-- This gives access to the store data and it automatically
+    unsubscribes from the store when component is destroyed-->
+    {#each $PollStore as poll (poll.id)}
         <div>
-            <PollDetails {poll} on:vote/>    
+            <PollDetails {poll}/>    
         </div>
     {/each}
 </div>
