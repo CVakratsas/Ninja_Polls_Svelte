@@ -80,6 +80,7 @@
 
     label {
         margin: 10px auto;
+        display: block;
         text-align: left;
     }
 
