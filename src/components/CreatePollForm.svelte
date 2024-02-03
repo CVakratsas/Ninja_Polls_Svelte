@@ -1,15 +1,18 @@
 <script>
-    import PollStore from "../stores/PollStore";
+    import { PollStore } from "../stores/PollStore";
     import { createEventDispatcher } from "svelte";
     import Button from "../shared/Button.svelte";
+    import { addDoc, collection } from "firebase/firestore";
+    import { db } from "../firebaseConfig";
 
     let dispatch = createEventDispatcher();
     
     let fields = { question: '', answerA: '', answerB: '' };
     let errors = { question: '', answerA: '', answerB: '' };
+    let poll = { ...fields, votesA: 0, votesB: 0 };
     let valid = false;
   
-    let submitHandler = () => {
+    let submitHandler = async () => {
         valid = true;
       // validate question
       if (fields.question.trim().length < 5) {
@@ -37,11 +40,21 @@
 
       // add new poll
       if (valid) {
-        let poll = {...fields, votesA: 0, votesB: 0, id: Math.random()};
+        // let poll = {...fields, votesA: 0, votesB: 0, id: Math.random()};
         // save poll to store
         PollStore.update(currentPolls => {
           return [poll, ...currentPolls];
         });
+
+        // Save poll to Firebase
+        try {
+          const docRef = await addDoc(collection(db, "polls"), poll);
+          console.log("Poll added with ID: ", docRef.id);
+        } catch (e) {
+          console.error("Error adding poll to Firestore: ", e.message);
+        }
+
+
         dispatch('add');
       }
     }

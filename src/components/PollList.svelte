@@ -2,7 +2,12 @@
     import { fade, slide, scale } from 'svelte/transition';
     import { flip } from 'svelte/animate';
     import PollDetails from "./PollDetails.svelte";
-    import PollStore from "../stores/PollStore";
+    import { PollStore, unsubscribe } from "../stores/PollStore";
+    import { onDestroy } from 'svelte';
+
+    onDestroy(() => {
+        unsubscribe();
+    });
 </script>
 
 <div class="poll-list">
