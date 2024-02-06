@@ -40,7 +40,7 @@
 
       // add new poll
       if (valid) {
-        // let poll = {...fields, votesA: 0, votesB: 0, id: Math.random()};
+        let poll = {...fields, votesA: 0, votesB: 0, id: Math.random()};
         // save poll to store
         PollStore.update(currentPolls => {
           return [poll, ...currentPolls];
