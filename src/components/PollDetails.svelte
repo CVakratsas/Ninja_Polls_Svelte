@@ -1,8 +1,9 @@
 <script>
-  import { PollStore, unsubscribe } from "../stores/PollStore";
+  // import { PollStore, unsubscribe } from "../stores/PollStore";
   import Card from "../shared/Card.svelte";
   import Button from "../shared/Button.svelte";
   import { tweened } from "svelte/motion";
+  import PollStore from "../stores/PollStore";
 
   export let poll;
 
