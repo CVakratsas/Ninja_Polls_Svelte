@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVGGZ7XRKxE3FS6rj2vlXQZADevpG7-Ns",
@@ -10,23 +10,8 @@ const firebaseConfig = {
   appId: "1:190286936542:web:64a2d3943633b6fc45454f",
 };
 
-// init firebase app
+// Initialize firebase app
 initializeApp(firebaseConfig);
 
-// init services
+// Initialize database
 export const db = getFirestore();
-
-// // collection ref
-// const pollsColRef = collection(db, "polls");
-
-// // get collection data
-// getDocs(pollsColRef)
-//   .then((snapshot) => {
-//     let polls = [];
-//     snapshot.docs.forEach((doc) => {
-//       polls.push({ ...doc.data(), id: doc.id });
-//     });
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });

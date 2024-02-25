@@ -40,21 +40,20 @@
 
       // add new poll
       if (valid) {
-        let poll = {...fields, votesA: 0, votesB: 0, id: Math.random()};
-        // save poll to store
-        PollStore.update(currentPolls => {
-          return [poll, ...currentPolls];
-        });
+        let poll = {...fields, votesA: 0, votesB: 0};
+        // // save poll to store
+        // PollStore.update(currentPolls => {
+        //   return [poll, ...currentPolls];
+        // });
 
         // Save poll to Firebase
         try {
           const docRef = await addDoc(collection(db, "polls"), poll);
-          console.log("Poll added with ID: ", docRef.id);
+          // console.log("Poll added with ID: ", docRef.id);
         } catch (e) {
           console.error("Error adding poll to Firestore: ", e.message);
         }
-
-
+        
         dispatch('add');
       }
     }

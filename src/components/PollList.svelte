@@ -1,14 +1,14 @@
 <script>
-    import { fade, slide, scale } from 'svelte/transition';
+    import { scale } from 'svelte/transition';
     import { flip } from 'svelte/animate';
     import PollDetails from "./PollDetails.svelte";
-    // import { PollStore, unsubscribe } from "../stores/PollStore";
-    import PollStore from "../stores/PollStore";
-    import { onDestroy } from 'svelte';
+    import PollStore, { getPolls } from "../stores/PollStore";
+    import { onMount } from 'svelte';
 
-    // onDestroy(() => {
-    //     unsubscribe();
-    // });
+    // Fetch polls on component mount
+    onMount(() => {
+        getPolls();
+    });
 </script>
 
 <div class="poll-list">
@@ -26,7 +26,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 20px;
-        width: 80%;
-        margin: 0 auto;
+        /* width: 80%;
+        margin: 0 auto; */
     }
 </style>
