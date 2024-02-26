@@ -4,6 +4,7 @@
   import Button from "../shared/Button.svelte";
   import { tweened } from "svelte/motion";
   import PollStore from "../stores/PollStore";
+  import { addVote, deletePoll } from "../stores/firebaseService";
 
   export let poll;
 
@@ -20,27 +21,38 @@
   // $: console.log($tweenedA, $tweenedB);
 
   // handling votes
-  const handleVote = (option, id) => {
-    PollStore.update(currentPolls => {
-      let copiedPolls = [...currentPolls];
-      let upvotedPoll = copiedPolls.find((poll) => poll.id == id);
+  // const handleVote = (option, id) => {
+  //   PollStore.update(currentPolls => {
+  //     let copiedPolls = [...currentPolls];
+  //     let upvotedPoll = copiedPolls.find((poll) => poll.id == id);
 
-      if (option === 'a') {
-        upvotedPoll.votesA++;
-      }
-      if (option === 'b') {
-        upvotedPoll.votesB++;
-      }
-      return copiedPolls;
-    });
-  }
+  //     if (option === 'a') {
+  //       upvotedPoll.votesA++;
+  //     }
+  //     if (option === 'b') {
+  //       upvotedPoll.votesB++;
+  //     }
+  //     return copiedPolls;
+  //   });
+  // }
 
-  // deleting a poll
-  const handleDelete = (id) => {
-    PollStore.update(currentPolls => {
-      return currentPolls.filter(poll => poll.id != id)
-    });
+  const handleVote = async (option, id) => {
+    try {
+        const optionField = option === 'a' ? 'votesA' : 'votesB';
+        await addVote(id, optionField);
+    } catch (error) {
+        console.error("Error updating vote:", error);
+    }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await deletePoll(id);
+    } catch (error) {
+      console.error("Error deleting poll:", error);
+    }
+  };
+
 </script>
 
 <Card>
